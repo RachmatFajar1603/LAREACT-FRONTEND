@@ -20,8 +20,20 @@ Route::get('/home', function () {
     return Inertia::render('Home');
 });
 
-Route::get('/sppd', function () {
-    return Inertia::render('Sppd');
+Route::get('/sppd-list', function () {
+    return Inertia::render('UserBidang/SppdList');
+});
+
+Route::get('/sppd-create', function () {
+    return Inertia::render('UserBidang/SppdCreate');
+});
+
+Route::get('/sekretariat-create', function () {
+    return Inertia::render('Sekretariat/SekretariatCreate');
+});
+
+Route::get('/sekretariat-list', function () {
+    return Inertia::render('Sekretariat/SekretariatList');
 });
 
 Route::get('/', function () {
