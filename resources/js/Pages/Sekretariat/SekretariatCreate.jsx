@@ -7,64 +7,79 @@ const Sekretariat = () => {
 
     const formFields = [
         {
-            label: "Field 1",
-            type: "text",
-            name: "field1",
-            placeholder: "Enter field 1",
+            label: "No ST",
+            type: "number",
+            name: "no_st",
+            placeholder: "000",
         },
         {
-            label: "Field 2",
+            label: "Kode ST",
+            type: "text",
+            name: "kode_st",
+            value: "ST",
+        },
+        {
+            label: "Bulan",
+            type: "text",
+            name: "bulan",
+            placeholder: "Bulan dalam romawi",
+        },
+        {
+            label: "Tahun",
+            type: "number",
+            name: "tahun",
+            placeholder: "Tahun",
+        },
+        {
+            label: "Nama",
+            type: "text",
+            name: "nama",
+            placeholder: "Nama",
+        },
+        {
+            label: "Perihal/Tujuan",
+            type: "text",
+            name: "perihal",
+            placeholder: "Perihal/Tujuan",
+        },
+        {
+            label: "Lokasi",
+            type: "text",
+            name: "lokasi",
+            placeholder: "Lokasi",
+        },
+        {
+            label: "Waktu dan Tanggal",
+            type: "text",
+            name: "waktu",
+            placeholder: "Waktu dan Tanggal",
+        },
+        {
+            label: "Tanggal Pengesahan",
             type: "datetime-local",
-            name: "field2",
-            placeholder: "Enter field 2",
+            name: "tanggal_pengesahann",
         },
         {
-            label: "Field 20",
-            type: "text",
-            name: "field20",
-            placeholder: "Enter field 20",
-        },
-        {
-            label: "Field 20",
-            type: "text",
-            name: "field20",
-            placeholder: "Enter field 20",
-        },
-        {
-            label: "Field 20",
-            type: "text",
-            name: "field20",
-            placeholder: "Enter field 20",
-        },
-        {
-            label: "Field 20",
-            type: "text",
-            name: "field20",
-            placeholder: "Enter field 20",
-        },
-        {
-            label: "Field 20",
-            type: "text",
-            name: "field20",
-            placeholder: "Enter field 20",
-        },
-        {
-            label: "Field 20",
-            type: "text",
-            name: "field20",
-            placeholder: "Enter field 20",
-        },
-        {
-            label: "Field 20",
-            type: "text",
-            name: "field20",
-            placeholder: "Enter field 20",
-        },
-        {
-            label: "Field 20",
-            type: "text",
-            name: "field20",
-            placeholder: "Enter field 20",
+            label: "PIlih Bidang",
+            type: "select",
+            option: [{
+                value: "1",
+                label: "Bidang 1",
+            }, {
+                value: "2",
+                label: "Bidang 2",
+            }, {
+                value: "3",
+                label: "Bidang 3",
+            }, {
+                value: "4",
+                label: "Bidang 4",
+            }, {
+                value: "5",
+                label: "Bidang 5",
+            }],
+            name: "pilih_bidang",
+            placeholder: "Pilih bidang",
         },
         {
             label: "Field 20",

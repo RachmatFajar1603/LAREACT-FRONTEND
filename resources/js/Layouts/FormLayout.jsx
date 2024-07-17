@@ -16,26 +16,32 @@ const Form = ({ onSubmit, fields, title }) => {
     };
 
     return (
-        <Card title={title}>
-            <form onSubmit={handleSubmit}>
-                <div className="flex flex-wrap -mx-2">
-                    {fields.map((field) => (
-                        <FormField
-                            key={field.name}
-                            label={field.label}
-                            type={field.type}
-                            name={field.name}
-                            placeholder={field.placeholder}
-                            value={formData[field.name] || ""}
-                            onChange={handleChange}
-                        />
-                    ))}
-                </div>
-                <div className="mt-6">
-                    <Button type="submit">Submit</Button>
-                </div>
-            </form>
-        </Card>
+        <>
+                <Card title={title}>
+                    <form onSubmit={handleSubmit}>
+                        <div className="grid grid-rows-7 grid-flow-col gap-4">
+                            {fields.map((field) => (
+                                <FormField
+                                    key={field.name}
+                                    label={field.label}
+                                    type={field.type}
+                                    name={field.name}
+                                    placeholder={field.placeholder}
+                                    value={field.value}
+                                    options={field.options}
+                                    onChange={handleChange}
+                                />
+                            ))}
+                        </div>
+                        <div className=" flex justify-end">
+                            <div className="mt-6 w-fit">
+                                <Button type="submit">Submit</Button>
+                            </div>
+                        </div>
+                    </form>
+                </Card>
+            
+        </>
     );
 };
 
