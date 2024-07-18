@@ -43,7 +43,7 @@ const Sekretariat = ({ no_st, no_urut_sppd }) => {
             label: "No ST",
             type: "input-with-button",
             name: "no_st",
-            placeholder: "000",
+            placeholder: "generate",
             value: no_st,
             onChange: (e) => setData("no_st", e.target.value),
             onButtonClick: generateCode,
@@ -90,7 +90,7 @@ const Sekretariat = ({ no_st, no_urut_sppd }) => {
         },
         {
             label: "Waktu dan Tanggal",
-            type: "text",
+            type: "date-range",
             name: "waktu",
             placeholder: "Waktu dan Tanggal",
         },
@@ -143,6 +143,7 @@ const Sekretariat = ({ no_st, no_urut_sppd }) => {
             onButtonClick: generateCode,
             buttonText: "Generate",
             disabled: isCodeGenerated,
+            placeholder: "generate",
         },
         {
             label: "Kode Tulisan SPPD",

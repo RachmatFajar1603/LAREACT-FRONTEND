@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Modal from "../Modal/Index";
+import DateModal from "../Modal/DateModal";
 const InputField = ({
     fieldType,
     type,
@@ -12,6 +13,7 @@ const InputField = ({
     onClick,
 }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isDateModalOpen, setIsDateModalOpen] = useState(false);
     const [generatedCode, setGeneratedCode] = useState("");
     const [codeCounter, setCodeCounter] = useState(1);
     const [isCodeGenerated, setIsCodeGenerated] = useState(false);
@@ -43,6 +45,22 @@ const InputField = ({
         if (onChange) {
             onChange({ target: { name, value: newCode } });
         }
+    };
+
+    const handleDateButtonClick = () => {
+        setIsDateModalOpen(true);
+    };
+
+    const handleCloseDateModal = () => {
+        setIsDateModalOpen(false);
+    };
+
+    const handleAppendDateData = (startDate, endDate) => {
+        console.log(`Appending date data: ${startDate} to ${endDate}`);
+        if (onChange) {
+            onChange({ target: { name, value: `${startDate} - ${endDate}` } });
+        }
+        setIsDateModalOpen(false);
     };
 
     switch (type) {
@@ -112,9 +130,27 @@ const InputField = ({
                                 : "bg-blue-500 hover:bg-blue-600"
                         }`}
                     >
-                        Generate
+                        {placeholder}
                     </button>
                 </div>
+            );
+        case "date-range":
+            return (
+                <>
+                    <div className="flex">
+                        <button
+                            onClick={() => setIsDateModalOpen(true)}
+                            className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        >
+                            Pilih Tanggal
+                        </button>
+                    </div>
+                    <DateModal
+                        isOpen={isDateModalOpen}
+                        onClose={() => setIsDateModalOpen(false)}
+                        onAppend={handleAppendDateData}
+                    />
+                </>
             );
         case "button":
             return (

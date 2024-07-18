@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 const Modal = ({ isOpen, onClose, onAppend }) => {
     const [departure, setDeparture] = useState("");
-    const [destination, setDestination] = useState("");
+    const [destinations, setDestinations] = useState([]);
     const [showResult, setShowResult] = useState(false);
 
     const departureOptions = [
@@ -15,11 +15,21 @@ const Modal = ({ isOpen, onClose, onAppend }) => {
         { value: "bandung", label: "Bandung" },
         { value: "yogyakarta", label: "Yogyakarta" },
         { value: "semarang", label: "Semarang" },
+        { value: "solo", label: "Solo" },
+        { value: "malang", label: "Malang" },
     ];
+
+    const handleDestinationChange = (value) => {
+        setDestinations(prev =>
+            prev.includes(value)
+                ? prev.filter(item => item !== value)
+                : [...prev, value]
+        );
+    };
 
     const handleAppend = () => {
         setShowResult(true);
-        onAppend(departure, destination);
+        onAppend(departure, destinations);
     };
 
     if (!isOpen) return null;
@@ -48,27 +58,31 @@ const Modal = ({ isOpen, onClose, onAppend }) => {
                     </div>
 
                     <div>
-                        <label htmlFor="destination" className="block mb-2 font-bold">Tujuan:</label>
-                        <select
-                            id="destination"
-                            value={destination}
-                            onChange={(e) => setDestination(e.target.value)}
-                            className="w-full p-3 border rounded-lg"
-                        >
-                            <option value="">Pilih Tujuan</option>
+                        <label className="block mb-2 font-bold">Tujuan (pilih satu atau lebih):</label>
+                        <div className="space-y-2">
                             {destinationOptions.map((option) => (
-                                <option key={option.value} value={option.value}>
+                                <label key={option.value} className="flex items-center">
+                                    <input
+                                        type="checkbox"
+                                        checked={destinations.includes(option.value)}
+                                        onChange={() => handleDestinationChange(option.value)}
+                                        className="mr-2"
+                                    />
                                     {option.label}
-                                </option>
+                                </label>
                             ))}
-                        </select>
+                        </div>
                     </div>
                 </div>
 
                 {showResult && (
                     <div className="mt-6 p-4 bg-gray-100 rounded-lg">
                         <p><strong>Keberangkatan:</strong> {departureOptions.find(opt => opt.value === departure)?.label || 'Belum dipilih'}</p>
-                        <p><strong>Tujuan:</strong> {destinationOptions.find(opt => opt.value === destination)?.label || 'Belum dipilih'}</p>
+                        <p><strong>Tujuan:</strong> {
+                            destinations.length > 0
+                                ? destinations.map(dest => destinationOptions.find(opt => opt.value === dest)?.label).join(', ')
+                                : 'Belum dipilih'
+                        }</p>
                     </div>
                 )}
 
@@ -77,7 +91,7 @@ const Modal = ({ isOpen, onClose, onAppend }) => {
                         onClick={handleAppend}
                         className="bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-600 transition duration-300"
                     >
-                        Append 
+                        Append
                     </button>
                     <button
                         onClick={onClose}
