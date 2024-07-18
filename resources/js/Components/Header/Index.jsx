@@ -1,10 +1,13 @@
-// components/Navbar.js
 import React, { useState } from "react";
 import { Link } from "@inertiajs/react";
+import { usePage } from "@inertiajs/react";
 
 const Header = ({ toggleSidebar }) => {
+    const { auth } = usePage().props;
+    const user = auth.user;
     const [dropdownOpen, setDropdownOpen] = useState(false);
 
+    console.log(user); // S
     return (
         <nav className="bg-white shadow-lg">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -32,7 +35,7 @@ const Header = ({ toggleSidebar }) => {
                             </button>
                             <Link
                                 to="/"
-                                className="text-xl font-bold text-indigo-600"
+                                className="text-xl font-bold text-black font-serif"
                             >
                                 SPPD DPMPTSP
                             </Link>
@@ -47,29 +50,26 @@ const Header = ({ toggleSidebar }) => {
                                     }
                                     className="flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                                 >
-                                    <img
-                                        className="h-8 w-8 rounded-full"
-                                        src="https://via.placeholder.com/150"
-                                        alt="User avatar"
-                                    />
+                                    <div>{user ? user.name : 'AKUN'}</div>
+                                    <svg
+                                        className="ms-2 -me-0.5 h-4 w-4"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        viewBox="0 0 20 20"
+                                        fill="currentColor"
+                                    >
+                                        <path
+                                            fillRule="evenodd"
+                                            d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                            clipRule="evenodd"
+                                        />
+                                    </svg>
                                 </button>
                             </div>
                             {dropdownOpen && (
                                 <div className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5">
                                     <Link
-                                        to="/profile"
-                                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                                    >
-                                        Your Profile
-                                    </Link>
-                                    <Link
-                                        to="/settings"
-                                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                                    >
-                                        Settings
-                                    </Link>
-                                    <Link
-                                        to="/logout"
+                                        method="post"
+                                        href={route("logout")}
                                         className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                                     >
                                         Sign out

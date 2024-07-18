@@ -1,16 +1,54 @@
+import Modal from "@/Components/Modal";
 import DefaultLayout from "@/Layouts/DefaultLayout";
 import Form from "@/Layouts/FormLayout";
-const Sekretariat = () => {
+import React, { useState } from "react";
+import { Head } from "@inertiajs/react";
+const Sekretariat = ({ no_st, no_urut_sppd }) => {
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [noST, setNoST] = useState("");
+    const [codeCounter, setCodeCounter] = useState(1);
+    const [isCodeGenerated, setIsCodeGenerated] = useState(false);
+
     const handleSubmit = (data) => {
         console.log("Form submitted:", data);
+    };
+
+    const handleOpenModal = () => {
+        setIsModalOpen(true);
+    };
+
+    const handleCloseModal = () => {
+        setIsModalOpen(false);
+    };
+
+    const handleModalSubmit = (data) => {
+        setLocationData(data);
+        handleCloseModal();
+    };
+
+    const generateCode = () => {
+        if (isCodeGenerated) {
+            alert("Kode sudah di-generate. Tidak bisa generate ulang.");
+            return;
+        }
+
+        const newCode = `${String(codeCounter).padStart(3, "0")}`;
+        setData("no_st", newCode);
+        setCodeCounter((prevCounter) => prevCounter + 1);
+        setIsCodeGenerated(true);
     };
 
     const formFields = [
         {
             label: "No ST",
-            type: "number",
+            type: "input-with-button",
             name: "no_st",
             placeholder: "000",
+            value: no_st,
+            onChange: (e) => setData("no_st", e.target.value),
+            onButtonClick: generateCode,
+            buttonText: "Generate",
+            disabled: isCodeGenerated,
         },
         {
             label: "Kode ST",
@@ -44,9 +82,11 @@ const Sekretariat = () => {
         },
         {
             label: "Lokasi",
-            type: "text",
+            type: "button",
             name: "lokasi",
-            placeholder: "Lokasi",
+            placeholder: "Klik untuk memilih lokasi",
+            onFocus: handleOpenModal, // Menggunakan onFocus untuk membuka modal
+            readOnly: true, // Mencegah input manual
         },
         {
             label: "Waktu dan Tanggal",
@@ -60,60 +100,73 @@ const Sekretariat = () => {
             name: "tanggal_pengesahann",
         },
         {
-            label: "PIlih Bidang",
+            label: "Pilih Bidang",
             type: "select",
-            option: [{
-                value: "1",
-                label: "Bidang 1",
-            }, {
-                value: "2",
-                label: "Bidang 2",
-            }, {
-                value: "3",
-                label: "Bidang 3",
-            }, {
-                value: "4",
-                label: "Bidang 4",
-            }, {
-                value: "5",
-                label: "Bidang 5",
-            }],
             name: "pilih_bidang",
-            placeholder: "Pilih bidang",
+            options: [
+                { value: "sekretariat", label: "Sekretariat" },
+                { value: "p2ipm", label: "P2IPM" },
+                { value: "promosi", label: "Promosi" },
+                { value: "perizinan", label: "Perizinan" },
+                { value: "dalak", label: "Dalak" },
+                { value: "datin", label: "Datin" },
+                { value: "uptd_kek", label: "UPTD_KEK" },
+            ],
         },
         {
-            label: "Field 20",
-            type: "text",
-            name: "field20",
-            placeholder: "Enter field 20",
+            label: "Kode Dinas",
+            type: "number",
+            name: "kode_dinas",
+            value: "094",
         },
         {
-            label: "Field 20",
-            type: "text",
-            name: "field20",
-            placeholder: "Enter field 20",
+            label: "kode Bidang",
+            type: "select",
+            name: "kode_bidang",
+            options: [
+                { value: "sekretariat", label: "Sekretariat" },
+                { value: "p2ipm", label: "P2IPM" },
+                { value: "promosi", label: "Promosi" },
+                { value: "perizinan", label: "Perizinan" },
+                { value: "dalak", label: "Dalak" },
+                { value: "datin", label: "Datin" },
+                { value: "uptd_kek", label: "UPTD_KEK" },
+            ],
         },
         {
-            label: "Field 20",
-            type: "text",
-            name: "field20",
-            placeholder: "Enter field 20",
+            label: "No Urut SPPD",
+            type: "input-with-button",
+            name: "no_urut_sppd",
+            value: no_urut_sppd,
+            placeholder: "0",
+            onChange: (e) => setData("no_urut_sppd", e.target.value),
+            onButtonClick: generateCode,
+            buttonText: "Generate",
+            disabled: isCodeGenerated,
         },
         {
-            label: "Field 20",
-            type: "text",
-            name: "field20",
-            placeholder: "Enter field 20",
+            label: "Kode Tulisan SPPD",
+            type: "number",
+            name: "kode_tulisan_sppd",
+            placeholder: "094/DI/025/SPPD/2024",
         },
     ];
     return (
-        <DefaultLayout>
-            <Form
-                onSubmit={handleSubmit}
-                fields={formFields}
-                title="Generate No ST & No SPPD"
-            />
-        </DefaultLayout>
+        <>
+        <Head title="Generate No ST & No SPPD" />
+            <DefaultLayout>
+                <Form
+                    onSubmit={handleSubmit}
+                    fields={formFields}
+                    title="Generate No ST & No SPPD"
+                />
+                <Modal
+                    isOpen={isModalOpen}
+                    onClose={handleCloseModal}
+                    onSubmit={handleModalSubmit}
+                />
+            </DefaultLayout>
+        </>
     );
 };
 

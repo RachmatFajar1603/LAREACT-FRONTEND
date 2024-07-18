@@ -2,7 +2,7 @@ import Button from "@/Components/Form/Button";
 import PrimaryButton from "@/Components/PrimaryButton";
 import Table from "@/Fragments/Table";
 import DefaultLayout from "@/Layouts/DefaultLayout";
-import { Link } from '@inertiajs/react';
+import { Link, Head } from '@inertiajs/react';
 
 const SekretariatList = () => {
     const headers = ["NO ST", "Kode St", "Bulan", "Tahun","Nama","Perihal","Lokasi","Waktu","Tanggal Pengesahan ST","Bidang","Kode Dinas","Kode Bidang","No urut SPPD","Kode Tulisan"];
@@ -26,6 +26,9 @@ const SekretariatList = () => {
         // Add more rows as needed
     ];
     return (
+
+        <>
+        <Head title="Generate No ST & No SPPD"/>
         <DefaultLayout>
             <div className="container mx-auto p-4">
                 <div className="flex justify-between pb-4">
@@ -41,6 +44,7 @@ const SekretariatList = () => {
                 />
             </div>
         </DefaultLayout>
+        </>
     );
 };
 export default SekretariatList;
